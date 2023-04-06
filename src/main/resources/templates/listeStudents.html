@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="template">
+
+<link rel="stylesheet" type="text/css"
+      href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<script src="webjars/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript"
+        src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<head>
+  <meta charset="utf-8">
+  <title>Students's List</title>
+
+
+</head>
+<body>
+<div layout:fragment="Mycontent">
+  <div th:insert="template.html"></div>
+  <br />
+  <br>
+  <br>
+
+  <div class="container">
+
+    <h2  class="display-5 fw-bold"><i class="bi bi-person-lines-fill"></i> Students' List</h2> <br> <br>
+    <div class="card">
+      <div class="card-header font-weight-bold text-primary">
+        <a th:href="@{showCreate}" class="btn btn-outline-primary float-end"><i class="bi bi-plus-circle-fill"></i> Add Student</a>
+        <u>Table : Students' List</u></i>
+      </div>
+      <div class="card-body">
+        <table class="table table-hover">
+          <tr>
+            <th>#</th><th>Student Name</th><th>Mail</th><th class="text-right">Actions</th><th></th>
+          </tr>
+          <tr th:each="s:${students.content}">
+            <td th:text="${s.id}"></td>
+            <td th:text="${s.name}"></td>
+            <td th:text="${s.email}"></td>
+            <td><a class="btn btn-danger" onclick="return confirm('Are you sure ?')"
+                   th:href="@{supprimerStudent(id=${s.id},
+page=${currentPage},size=${size})}"><i class="bi bi-x-lg"></i></a></td>
+            <td><a class="btn btn-secondary" onclick="return confirm('Are you sure ?')"
+                   th:href="@{modifierStudent(id=${s.id},
+page=${currentPage},size=${size})}"><i class="bi bi-pen"></i></a></td>
+          </tr>
+        </table>
+        <ul class="nav nav-pills">
+          <li th:each="page,status:${pages}">
+            <a th:class="${status.index==currentPage?'btn btn-primary':'btn'
+}"
+               th:href="@{ listeStudents(page=${status.index}, size=${size} )
+}"
+               th:text="${status.index }"></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
